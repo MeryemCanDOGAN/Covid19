@@ -12,6 +12,8 @@ namespace CovidApp
         public int AccountId { get; set; }
         public virtual Account? Account { get; set; } 
         public virtual ICollection<Notify>? Notifies { get; set; }   
-        public ICollection<VaccinationInformation>? VaccinationInformation { get; set; }    
+        public ICollection<VaccinationInformation>? VaccinationInformation { get; set; } 
+        public int CityId { get; set; }
+        public virtual City? City { get; set; }   
     }
 }

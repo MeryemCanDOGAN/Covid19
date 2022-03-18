@@ -32,6 +32,7 @@ namespace CovidApp.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -51,17 +52,21 @@ namespace CovidApp.Migrations
                     b.Property<int>("DistrcitId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DistrictId")
+                    b.Property<int?>("NotifyId")
                         .HasColumnType("int");
 
                     b.Property<string>("OpenAddress")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
 
-                    b.HasIndex("DistrictId");
+                    b.HasIndex("DistrcitId");
+
+                    b.HasIndex("NotifyId")
+                        .IsUnique();
 
                     b.ToTable("Addresses");
                 });
@@ -73,6 +78,7 @@ namespace CovidApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -90,6 +96,7 @@ namespace CovidApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -105,24 +112,21 @@ namespace CovidApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<string>("ViolationDetail")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("ViolationSubject")
+                    b.Property<int>("ViolationSubject")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
 
                     b.HasIndex("UserId");
 
@@ -139,6 +143,7 @@ namespace CovidApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("No")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("UserId")
@@ -163,7 +168,11 @@ namespace CovidApp.Migrations
                     b.Property<DateOnly>("Birthdate")
                         .HasColumnType("date");
 
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("Gender")
@@ -173,12 +182,15 @@ namespace CovidApp.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId")
                         .IsUnique();
+
+                    b.HasIndex("CityId");
 
                     b.ToTable("Users");
                 });
@@ -241,11 +253,19 @@ namespace CovidApp.Migrations
 
                     b.HasOne("CovidApp.District", "District")
                         .WithMany()
-                        .HasForeignKey("DistrictId");
+                        .HasForeignKey("DistrcitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CovidApp.Notify", "Notify")
+                        .WithOne("Address")
+                        .HasForeignKey("CovidApp.Address", "NotifyId");
 
                     b.Navigation("City");
 
                     b.Navigation("District");
+
+                    b.Navigation("Notify");
                 });
 
             modelBuilder.Entity("CovidApp.District", b =>
@@ -261,17 +281,13 @@ namespace CovidApp.Migrations
 
             modelBuilder.Entity("CovidApp.Notify", b =>
                 {
-                    b.HasOne("CovidApp.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
+                    b.HasOne("CovidApp.User", "User")
+                        .WithMany("Notifies")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CovidApp.User", null)
-                        .WithMany("Notifies")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Address");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CovidApp.Passport", b =>
@@ -293,7 +309,15 @@ namespace CovidApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CovidApp.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Account");
+
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("CovidApp.VaccinationInformation", b =>
@@ -330,6 +354,8 @@ namespace CovidApp.Migrations
 
             modelBuilder.Entity("CovidApp.Notify", b =>
                 {
+                    b.Navigation("Address");
+
                     b.Navigation("ViolationType");
                 });
 

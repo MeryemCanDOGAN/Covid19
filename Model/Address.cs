@@ -8,5 +8,7 @@ namespace CovidApp
         public virtual City? City { get; set; }
         public int DistrcitId { get; set; }
         public virtual District? District { get; set; }
+        public int? NotifyId { get; set; }
+        public Notify? Notify { get; set; }
     }
 }

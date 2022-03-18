@@ -7,8 +7,9 @@ namespace CovidApp
         public ViolationSubject? ViolationSubject { get; set; }
         public ViolationType? ViolationType { get; set; }
         public string? ViolationDetail { get; set; }
-        public int AddressId { get; set; }
         public virtual Address? Address { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
         // Todo: Fotoğraf ekleme işlemi
     }
 }

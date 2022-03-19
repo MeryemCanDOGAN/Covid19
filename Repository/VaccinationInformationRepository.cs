@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace CovidApp
 {
     public class VaccinationInformationRepository : IVaccinationInformationRepository
@@ -9,40 +11,53 @@ namespace CovidApp
             this._context = context;
         }
 
-        public Task<VaccinationInformation> Create(VaccinationInformation vaccination)
+        public async Task<VaccinationInformation> Create(VaccinationInformation vaccination)
         {
-            throw new NotImplementedException();
+            await _context.VaccinationInformations.AddAsync(vaccination);
+            await _context.SaveChangesAsync();
+            return vaccination;
         }
 
-        public Task Delete(VaccinationInformation vaccination)
+        public async Task Delete(VaccinationInformation vaccination)
         {
-            throw new NotImplementedException();
+            _context.VaccinationInformations.Remove(vaccination);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<List<VaccinationInformation>> GetAllVaccinationInformation()
+        public async Task<List<VaccinationInformation>> GetAllVaccinationInformation()
         {
-            throw new NotImplementedException();
+            return await (from vaccination in _context.VaccinationInformations
+                          select vaccination).ToListAsync();
         }
 
-        public Task<List<User>> GetUsersByVaccinationInformationName(VaccinationName vaccinationName)
+        public async Task<List<User>> GetUsersByVaccinationInformationName(VaccinationName vaccinationName)
         {
-            throw new NotImplementedException();
+            List<User> users = await (from x in _context.VaccinationInformations
+                                where x.VacinationName == vaccinationName
+                                select x.User).ToListAsync();
+
+            return users;
         }
 
-        public Task<List<VaccinationInformation>> GetUserVaccinationInformationByUserId(int id)
+        public async Task<List<VaccinationInformation>> GetUserVaccinationInformationByUserId(int id)
         {
-            throw new NotImplementedException();
+            return await (from x in _context.VaccinationInformations
+                          where x.UserId == id
+                          select x).ToListAsync();
         }
 
-        public Task<VaccinationInformation> GetVaccinationInformationById(int id)
+        public async Task<VaccinationInformation> GetVaccinationInformationById(int id)
         {
-            throw new NotImplementedException();
+            return await (from x in _context.VaccinationInformations
+                          where x.Id == id
+                          select x).FirstOrDefaultAsync();
         }
 
-        public Task<VaccinationInformation> Update(VaccinationInformation vaccination)
+        public async Task<VaccinationInformation> Update(VaccinationInformation vaccination)
         {
-            throw new NotImplementedException();
+            _context.VaccinationInformations.Update(vaccination);
+            await _context.SaveChangesAsync();
+            return vaccination;
         }
     }
-
 }

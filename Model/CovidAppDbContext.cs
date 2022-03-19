@@ -118,6 +118,13 @@ namespace CovidApp
                                    OpenAddress = "Adakent Mah. Şişli/Ankara",
                                    CityId = 3,
                                    DistrictId = 3
+                               },
+                                 new Address
+                               {
+                                   Id = 4,
+                                   OpenAddress = "Adakent Mah. Şişli/Ankara",
+                                   CityId = 3,
+                                   DistrictId = 3
                                }
             );
 

@@ -1,71 +1,90 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+
 namespace CovidApp
 {
     public class AddressRepository : IAddressRepository
     {
-        public Task<Address> CreateAddress(Address address)
+        private readonly CovidAppDbContext _context;
+        public AddressRepository(CovidAppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<City> CreateCity(City city)
+        {
+            await _context.Set<City>().AddAsync(city);
+            await _context.SaveChangesAsync();
+            return city;
         }
 
-        public Task<City> CreateCity(City city)
+        public async Task<District> CreateDistrict(District district)
         {
-            throw new NotImplementedException();
+            await _context.Set<District>().AddAsync(district);
+            await _context.SaveChangesAsync();
+            return district;
         }
 
-        public Task<District> CreateDistrict(District district)
+        public async Task<Address> DeleteAddress(int id)
         {
-            throw new NotImplementedException();
+            var DeleteAddress = await _context.Addresses.FirstOrDefaultAsync(x => x.Id == id);
+            _context.Addresses.Remove(DeleteAddress);
+            _context.SaveChangesAsync();
+            return null;
+
         }
 
-        public Task<Address> DeleteAddress(int id)
+
+
+        public async Task<City> FindCityByName(string CityName)
         {
-            throw new NotImplementedException();
+            return await _context.Set<City>().FirstOrDefaultAsync(c => c.Name == CityName);
         }
 
-        public Task<City> DeleteCity(City city)
+        public async Task<District> FindDistrictByName(string DistirctName)
         {
-            throw new NotImplementedException();
+            return await _context.Set<District>().FirstOrDefaultAsync(c => c.Name == DistirctName);
         }
 
-        public Task<District> DeleteDistrict(District district)
+        public async Task<Address> GetAddressById(int id)
         {
-            throw new NotImplementedException();
+            var getAddress = await _context.Set<Address>().SingleOrDefaultAsync(p => p.Id == id);
+            if (getAddress != null)
+            {
+                return getAddress;
+            }
+            return null;
         }
 
-        public Task<City> FindCityByName(string CityName)
+        public async Task<List<Address>> GetAllAddress()
         {
-            throw new NotImplementedException();
+            return await _context.Set<Address>().ToListAsync();
         }
 
-        public Task<District> FindDistrictByName(string DistirctName)
+        public async Task<List<City>> GetAllCity()
         {
-            throw new NotImplementedException();
+            return await _context.Set<City>().ToListAsync();
         }
 
-        public Task<Address> GetAddressById(int id)
+        public async Task<List<District>> GetAllDistricts()
         {
-            throw new NotImplementedException();
+            return await _context.Set<District>().ToListAsync();
+
         }
 
-        public Task<List<Address>> GetAllAddress()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<City>> GetAllCity()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<District>> GetAllDistrictsByCityId(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Address> UpdateAddress(Address address)
-        {
-            throw new NotImplementedException();
-        }
+    public async Task<Address> CreateAddress(Address address)
+    {
+        _context.Addresses.AddAsync(address);
+        await _context.SaveChangesAsync();
+        return address;
     }
+
+    public async Task<Address> UpdateAddress(Address address)
+    {
+        _context.Addresses.Update(address);
+        await _context.SaveChangesAsync();
+        return address;
+    }
+}
 
 }

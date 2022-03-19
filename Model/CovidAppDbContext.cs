@@ -48,7 +48,7 @@ namespace CovidApp
             entity.HasKey(e => e.Id);
             entity.Property(e => e.OpenAddress).IsRequired();
             entity.HasOne(e=> e.City).WithMany().HasForeignKey(e=>e.CityId);
-            entity.HasOne(e=> e.District).WithMany().HasForeignKey(e=>e.DistrcitId);
+            entity.HasOne(e=> e.District).WithMany().HasForeignKey(e=>e.DistrictId);
         });
         modelBuilder.Entity<City>(entity =>
         {
@@ -91,7 +91,76 @@ namespace CovidApp
             entity.Property(e => e.IsHygienic).IsRequired();
             entity.Property(e => e.IsSocialDistanceViolated).IsRequired();
         });
+        SetDataToDB(modelBuilder);
 
+        }
+        static void SetDataToDB(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Address>().HasData(
+                            new Address
+                            {
+                                Id = 1,
+                                OpenAddress = "Barış Mah. Beylikdüzü/İstanbul",
+                                CityId = 1,
+                                DistrictId = 1
+                            },
+                               new Address
+                               {
+                                   Id = 2,
+                                   OpenAddress = "Cumhuriyet Mah. Avcılar/İzmir",
+                                   CityId = 2,
+                                   DistrictId = 2
+
+                               },
+                               new Address
+                               {
+                                   Id = 3,
+                                   OpenAddress = "Adakent Mah. Şişli/Ankara",
+                                   CityId = 3,
+                                   DistrictId = 3
+                               }
+            );
+
+            modelBuilder.Entity<City>().HasData(
+                            new City
+                            {
+                                Id = 1,
+                                Name = "İstanbul"
+
+                            },
+                               new City
+                               {
+                                   Id = 2,
+                                   Name = "İzmir"
+
+                               },
+                               new City
+                               {
+                                   Id = 3,
+                                   Name = "Ankara"
+
+                               }
+            );
+            modelBuilder.Entity<District>().HasData(
+                            new District
+                            {
+                                Id = 1,
+                                Name = "Beylikdüzü",
+                                CityId = 1
+                            },
+                               new District
+                               {
+                                   Id = 2,
+                                   Name = "Avcılar",
+                                   CityId = 2,
+                               },
+                               new District
+                               {
+                                   Id = 3,
+                                   Name = "Büyükçekmece",
+                                   CityId = 3
+                               }
+            );
         }
 
     }

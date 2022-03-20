@@ -53,7 +53,7 @@ namespace CovidApp
         async Task<IEnumerable<Notify>> INotifyRepository.GetNotifiesByDistrictId(int districtId)
         {
             List<Notify> notifies = await (from us in _dbcontext.Notifies
-                                           where us.Address.DistrcitId == districtId
+                                           where us.Address.DistrictId == districtId
                                            select us).ToListAsync();
             return notifies;
         }
@@ -105,7 +105,7 @@ namespace CovidApp
             }
             return null;
         }
-        
+
     }
 
 }

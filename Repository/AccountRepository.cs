@@ -22,14 +22,24 @@ namespace CovidApp
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Account> FindById(int id)
+        public async Task<Account> FindByIdAsync(int id)
         {
             return await _context.Accounts.FirstOrDefaultAsync(a=>a.Id==id);
         }
 
-        public async Task<Account> FindByPhoneNumber(string phoneNumber)
+        public Account FindById(int id)
+        {
+            return _context.Accounts.FirstOrDefault(a=>a.Id==id);
+        }
+
+        public async Task<Account> FindByPhoneNumberAsync(string phoneNumber)
         {
             return await _context.Accounts.FirstOrDefaultAsync(a=>a.PhoneNumber==phoneNumber);
+        }
+
+        public Account FindByPhoneNumber(string phoneNumber)
+        {
+            return _context.Accounts.FirstOrDefault(a=>a.PhoneNumber==phoneNumber);
         }
 
         public async Task<List<Account>> GetAll()

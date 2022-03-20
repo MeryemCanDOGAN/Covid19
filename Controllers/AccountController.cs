@@ -59,7 +59,7 @@ namespace CovidApp
         [HttpGet("getbyphonenumber")]
         public async Task<Account> GetByPhoneNumber([FromQuery] string phoneNumber)
         {
-            return await _accountService.FindByPhoneNumber(phoneNumber);
+            return await _accountService.FindByPhoneNumberAsync(phoneNumber);
         }
 
         [HttpGet("getbyid")]

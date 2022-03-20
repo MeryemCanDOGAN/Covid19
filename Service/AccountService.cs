@@ -11,7 +11,7 @@ namespace CovidApp
 
         public async Task Create(Account account)
         {
-            var createdAccount = await _accountRepository.FindById(account.Id);
+            var createdAccount = await _accountRepository.FindByIdAsync(account.Id);
             if(createdAccount is not null)
                 throw new Exception("Böyle bir kullanıcı zaten var");
             await _accountRepository.Create(account);
@@ -19,7 +19,7 @@ namespace CovidApp
 
         public async Task Delete(int id)
         {
-            var deletedAccount = await _accountRepository.FindById(id);
+            var deletedAccount = await _accountRepository.FindByIdAsync(id);
             if(deletedAccount is null)
                 throw new Exception("Böyle bir kullanıcı bulunamadı");
             await _accountRepository.Delete(deletedAccount);
@@ -27,12 +27,12 @@ namespace CovidApp
 
         public async Task<Account> FindById(int id)
         {
-            return await _accountRepository.FindById(id);
+            return await _accountRepository.FindByIdAsync(id);
         }
 
-        public async Task<Account> FindByPhoneNumber(string phoneNumber)
+        public async Task<Account> FindByPhoneNumberAsync(string phoneNumber)
         {
-            return await _accountRepository.FindByPhoneNumber(phoneNumber);
+            return await _accountRepository.FindByPhoneNumberAsync(phoneNumber);
         }
 
         public async Task<List<Account>> GetAll()
@@ -52,7 +52,7 @@ namespace CovidApp
 
         public async Task Update(Account account)
         {
-            var updatedAccount = await _accountRepository.FindById(account.Id);
+            var updatedAccount = await _accountRepository.FindByIdAsync(account.Id);
             if(updatedAccount is null)
                 throw new Exception("Böyle bir kullanıcı bulunamadı");
             await _accountRepository.Update(account);
@@ -60,7 +60,7 @@ namespace CovidApp
 
         public async Task UpdatePhoneNumber(string oldPhoneNumber, string newPhoneNumber)
         {
-            var updatedAccount = await _accountRepository.FindByPhoneNumber(oldPhoneNumber);
+            var updatedAccount = await _accountRepository.FindByPhoneNumberAsync(oldPhoneNumber);
             if(updatedAccount is null)
                 throw new Exception("Bu telefon numarası ile kayıtlı kullanıcı bulunamadı.");
             updatedAccount.PhoneNumber=newPhoneNumber;
@@ -69,7 +69,7 @@ namespace CovidApp
 
         public async Task ChangeIsBlockedById(int id)
         {
-            var account = await _accountRepository.FindById(id);
+            var account = await _accountRepository.FindByIdAsync(id);
             if(account is null)
                 throw new Exception("Böyle bir kullanıcı bulunamadı.");
             account.Blocked = !account.Blocked;
@@ -78,7 +78,7 @@ namespace CovidApp
 
         public async Task ChangeVisibilityById(int id)
         {
-            var account = await _accountRepository.FindById(id);
+            var account = await _accountRepository.FindByIdAsync(id);
             if(account is null)
                 throw new Exception("Böyle bir kullanıcı bulunamadı.");
             account.IsVisibility = !account.IsVisibility;

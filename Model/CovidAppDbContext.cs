@@ -250,7 +250,7 @@ namespace CovidApp
                                    LastName = "Unsal",
                                    Gender = Gender.Male,
                                    IsCorona = true,
-                                   Birthdate = new DateOnly(1999, 04, 02),
+                                   Birthdate = new DateTime(1999, 04, 02),
                                    CityId = 1
                                },
                                new User
@@ -261,7 +261,7 @@ namespace CovidApp
                                    LastName = "Can",
                                    Gender = Gender.Female,
                                    IsCorona = true,
-                                   Birthdate = new DateOnly(1993, 04, 02),
+                                   Birthdate = new DateTime(1993, 04, 02),
                                    CityId = 1
                                },
                                new User
@@ -272,7 +272,7 @@ namespace CovidApp
                                    LastName = "Yarata",
                                    Gender = Gender.Male,
                                    IsCorona = true,
-                                   Birthdate = new DateOnly(1989, 04, 02),
+                                   Birthdate = new DateTime(1989, 04, 02),
                                    CityId = 1
                                },
                                new User
@@ -283,7 +283,7 @@ namespace CovidApp
                                    LastName = "Kaynak",
                                    Gender = Gender.Male,
                                    IsCorona = true,
-                                   Birthdate = new DateOnly(1995, 04, 02),
+                                   Birthdate = new DateTime(1995, 04, 02),
                                    CityId = 2
 
                                },
@@ -295,7 +295,7 @@ namespace CovidApp
                                    LastName = "Nihan",
                                    Gender = Gender.Female,
                                    IsCorona = false,
-                                   Birthdate = new DateOnly(1997, 04, 02),
+                                   Birthdate = new DateTime(1997, 04, 02),
                                    CityId = 2
                                },
                                new User
@@ -306,7 +306,7 @@ namespace CovidApp
                                    LastName = "Deveci",
                                    Gender = Gender.Female,
                                    IsCorona = false,
-                                   Birthdate = new DateOnly(1998, 04, 02),
+                                   Birthdate = new DateTime(1998, 04, 02),
                                    CityId = 2
                                },
                                new User
@@ -317,7 +317,7 @@ namespace CovidApp
                                    LastName = "Öztürk",
                                    Gender = Gender.Male,
                                    IsCorona = false,
-                                   Birthdate = new DateOnly(1991, 04, 02),
+                                   Birthdate = new DateTime(1991, 04, 02),
                                    CityId = 3
 
                                },
@@ -329,7 +329,7 @@ namespace CovidApp
                                    LastName = "Sakarya",
                                    Gender = Gender.Female,
                                    IsCorona = false,
-                                   Birthdate = new DateOnly(1996, 04, 02),
+                                   Birthdate = new DateTime(1996, 04, 02),
                                    CityId = 3
                                },
                                new User
@@ -340,7 +340,7 @@ namespace CovidApp
                                    LastName = "Kurtay",
                                    Gender = Gender.Male,
                                    IsCorona = false,
-                                   Birthdate = new DateOnly(2001, 04, 02),
+                                   Birthdate = new DateTime(2001, 04, 02),
                                    CityId = 3
                                }
 

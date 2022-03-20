@@ -8,70 +8,72 @@ namespace CovidApp
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private ResponseGeneratorHelper ResponseGeneratorHelper;
 
         public UserController(IUserService userService)
         {
             _userService = userService;
+            ResponseGeneratorHelper = new ResponseGeneratorHelper();
         }
 
         [HttpPost("create")]
-        public async Task Create(User user)
+        public async Task<ActionResult<BaseResponse<User>>> Create(User user)
         {
-            await _userService.Create(user);
+            return ResponseGeneratorHelper.ResponseGenerator(await _userService.Create(user));
         }
 
         [HttpPut("update")]
-        public async Task Update(User user)
+        public async Task<ActionResult<BaseResponse<User>>> Update(User user)
         {
-            await _userService.Update(user);
+            return ResponseGeneratorHelper.ResponseGenerator(await _userService.Update(user));
         }
 
         [HttpDelete("delete")]
-        public async Task Delete(User user)
+        public async Task<ActionResult<BaseResponse<string>>> Delete(User user)
         {
-            await _userService.Delete(user);
+            return ResponseGeneratorHelper.ResponseGenerator(await _userService.Delete(user));
         }
 
         [HttpGet("getall")]
-        public async Task<List<User>> GetAll()
+        public async Task<ActionResult<BaseResponse<List<User>>>> GetAll()
         {
-            return await _userService.GetAll();
+            return ResponseGeneratorHelper.ResponseGenerator(await _userService.GetAll());
         }
 
         [HttpGet]
-        public async Task<User> FindById([FromQuery]int id)
+        public async Task<ActionResult<BaseResponse<User>>> FindById([FromQuery]int id)
         {
-            return await _userService.FindById(id);
+            return ResponseGeneratorHelper.ResponseGenerator(await _userService.FindById(id));
         }
 
         [HttpGet("positivecount")]
-        public async Task<int> PositiveCount()
+        public async Task<ActionResult<BaseResponse<int>>> PositiveCount()
         {
-            return await _userService.CoronaCount();
+            return ResponseGeneratorHelper.ResponseGenerator(await _userService.CoronaCount());
         }
 
         [HttpGet("positivecountbycity")]
-        public async Task<int> PositiveCountByCity([FromQuery]int plateCode)
+        public async Task<ActionResult<BaseResponse<int>>> PositiveCountByCity([FromQuery]int plateCode)
         {
-            return await _userService.CoronaCountByCity(plateCode);
+            return ResponseGeneratorHelper.ResponseGenerator(await _userService.CoronaCountByCity(plateCode));
         }
 
         [HttpGet("getallbycity")]
-        public async Task<List<User>> GetAllByCity([FromQuery]int plateCode)
+        public async Task<ActionResult<BaseResponse<List<User>>>> GetAllByCity([FromQuery]int plateCode)
         {
-            return await _userService.GetAllUserByCityFromPlateCode(plateCode);
+            return ResponseGeneratorHelper.ResponseGenerator(await _userService.GetAllUserByCityFromPlateCode(plateCode));
         }
 
         [HttpGet("getallpositives")]
-        public async Task<List<User>> GetAllPositiveUser()
+        public async Task<ActionResult<BaseResponse<List<User>>>> GetAllPositiveUser()
         {
-            return await _userService.GetAllByIsCorona(true);
+            return ResponseGeneratorHelper.ResponseGenerator(await _userService.GetAllByIsCorona(true));
         }
 
         [HttpGet("getallpositivesbycity")]
-        public async Task<List<User>> GetAllPositiveUserByCityPlateCode([FromQuery]int plateCode)
+        public async Task<ActionResult<BaseResponse<List<User>>>> GetAllPositiveUserByCityPlateCode([FromQuery]int plateCode)
         {
-            return await _userService.GetAllByCityPlateCodeAndIsCorona(plateCode,true);
+            return ResponseGeneratorHelper.ResponseGenerator(await _userService.GetAllByCityPlateCodeAndIsCorona(plateCode,true));
         }
     }
 }

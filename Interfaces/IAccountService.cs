@@ -2,16 +2,16 @@ namespace CovidApp
 {
     public interface IAccountService
     {
-        Task Create(Account account);
-        Task Update(Account account);
-        Task Delete(int id);
-        Task<List<Account>> GetAll();
-        Task<List<Account>> GetAllByBlocked(bool isBlocked);
-        Task<List<Account>> GetAllByVisibility(bool isVisible);
-        Task<Account> FindByPhoneNumberAsync(string phoneNumber);
-        Task<Account> FindById(int id);
-        Task UpdatePhoneNumber(string oldPhoneNumber, string newPhoneNumber);
-        Task ChangeVisibilityById(int id);
-        Task ChangeIsBlockedById(int id);
+        Task<BaseResponse<Account>> Create(Account account);
+        Task<BaseResponse<Account>> Update(Account account);
+        Task<BaseResponse<string>> Delete(int id);
+        Task<BaseResponse<List<Account>>> GetAll();
+        Task<BaseResponse<List<Account>>> GetAllByBlocked(bool isBlocked);
+        Task<BaseResponse<List<Account>>> GetAllByVisibility(bool isVisible);
+        Task<BaseResponse<Account>> FindByPhoneNumberAsync(string phoneNumber);
+        Task<BaseResponse<Account>> FindById(int id);
+        Task<BaseResponse<Account>> UpdatePhoneNumber(string oldPhoneNumber, string newPhoneNumber);
+        Task<BaseResponse<Account>> ChangeVisibilityById(int id);
+        Task<BaseResponse<Account>> ChangeIsBlockedById(int id);
     }
 }

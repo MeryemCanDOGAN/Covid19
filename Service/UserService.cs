@@ -9,65 +9,168 @@ namespace CovidApp
             _userRepository = userRepository;
         }
 
-        public async Task<int> CoronaCount()
+        public async Task<BaseResponse<int>> CoronaCount()
         {
-            var coronas =  await _userRepository.GetAllByIsCorona(true);
-            return coronas.Count();
+            BaseResponse<int> response = new BaseResponse<int>();
+            try
+            {
+                var coronas =  await _userRepository.GetAllByIsCorona(true);
+                response.Data = coronas.Count();
+                response.ResponseStatusCodes = ResponseStatusCodes.Success;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.ResponseStatusCodes = ResponseStatusCodes.NotFound;
+                return response;
+            }
         }
 
-        public async Task<int> CoronaCountByCity(int plateCode)
+        public async Task<BaseResponse<int>> CoronaCountByCity(int plateCode)
         {
-            var coronas =  await _userRepository.GetAllByCityPlateCodeAndIsCorona(plateCode,true);
-            return coronas.Count();
+            BaseResponse<int> response = new BaseResponse<int>();
+            try
+            {
+                var coronas =  await _userRepository.GetAllByCityPlateCodeAndIsCorona(plateCode,true);
+                response.Data = coronas.Count();
+                response.ResponseStatusCodes = ResponseStatusCodes.Success;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.ResponseStatusCodes = ResponseStatusCodes.NotFound;
+                return response;
+            }
         }
 
-        public async Task Create(User user)
+        public async Task<BaseResponse<User>> Create(User user)
         {
+            BaseResponse<User> response = new BaseResponse<User>();
             var createdUser = await _userRepository.FindById(user.Id);
-            if(createdUser is not null)
-                throw new Exception("Böyle bir kullanıcı mevcut.");
+            if (createdUser is not null)
+            {
+                response.ResponseStatusCodes = ResponseStatusCodes.AccountCreateFail;
+                return response;
+            }
             await _userRepository.Create(user);
+            response.ResponseStatusCodes = ResponseStatusCodes.AccountCreateSuccess;
+            response.Data = createdUser;
+            return response;
         }
 
-        public async Task Delete(User user)
-        {
+        public async Task<BaseResponse<User>> Delete(User user)
+        { 
+            BaseResponse<User> response = new BaseResponse<User>();
             var deletedUser = await _userRepository.FindById(user.Id);
-            if(deletedUser is null)
-                throw new Exception("Böyle bir kullanıcı mevcut değil.");
+            if (deletedUser is not null)
+            {
+                response.ResponseStatusCodes = ResponseStatusCodes.AccountDeleteFail;
+                return response;
+            }
             await _userRepository.Delete(user);
+            response.ResponseStatusCodes = ResponseStatusCodes.AccountDeleteSuccess;
+            response.Data = deletedUser;
+            return response;
         }
 
-        public async Task<User> FindById(int id)
+        public async Task<BaseResponse<User>> FindById(int id)
         {
-            return await _userRepository.FindById(id);
+            BaseResponse<User> response = new BaseResponse<User>();
+            try
+            {
+                response.Data = await _userRepository.FindById(id);
+                response.ResponseStatusCodes = ResponseStatusCodes.Success;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Data = null;
+                response.ResponseStatusCodes = ResponseStatusCodes.BadRequest;
+                return response;
+            }
         }
 
-        public async Task<List<User>> GetAll()
+        public async Task<BaseResponse<List<User>>> GetAll()
         {
-            return await _userRepository.GetAll();
+            BaseResponse<List<User>> response = new BaseResponse<List<User>>();
+            try
+            {
+                response.Data = await _userRepository.GetAll();
+                response.ResponseStatusCodes = ResponseStatusCodes.Success;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Data = null;
+                response.ResponseStatusCodes = ResponseStatusCodes.BadRequest;
+                return response;
+            }
         }
 
-        public async Task<List<User>> GetAllUserByCityFromPlateCode(int plateCode)
+        public async Task<BaseResponse<List<User>>> GetAllUserByCityFromPlateCode(int plateCode)
         {
-            return await _userRepository.GetAllUserByCityFromPlateCode(plateCode);
+            BaseResponse<List<User>> response = new BaseResponse<List<User>>();
+            try
+            {
+                response.Data = await _userRepository.GetAllUserByCityFromPlateCode(plateCode);
+                response.ResponseStatusCodes = ResponseStatusCodes.Success;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Data = null;
+                response.ResponseStatusCodes = ResponseStatusCodes.BadRequest;
+                return response;
+            }
         }
 
-        public async Task<List<User>> GetAllByCityPlateCodeAndIsCorona(int plateCode, bool isCorona)
+        public async Task<BaseResponse<List<User>>> GetAllByCityPlateCodeAndIsCorona(int plateCode, bool isCorona)
         {
-            return await _userRepository.GetAllByCityPlateCodeAndIsCorona(plateCode,isCorona);
+            BaseResponse<List<User>> response = new BaseResponse<List<User>>();
+            try
+            {
+                response.Data = await _userRepository.GetAllByCityPlateCodeAndIsCorona(plateCode,isCorona);
+                response.ResponseStatusCodes = ResponseStatusCodes.Success;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Data = null;
+                response.ResponseStatusCodes = ResponseStatusCodes.BadRequest;
+                return response;
+            }
         }
 
-        public async Task<List<User>> GetAllByIsCorona(bool isCorona)
+        public async Task<BaseResponse<List<User>>> GetAllByIsCorona(bool isCorona)
         {
-            return await _userRepository.GetAllByIsCorona(isCorona);
+            BaseResponse<List<User>> response = new BaseResponse<List<User>>();
+            try
+            {
+                response.Data = await _userRepository.GetAllByIsCorona(isCorona);
+                response.ResponseStatusCodes = ResponseStatusCodes.Success;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Data = null;
+                response.ResponseStatusCodes = ResponseStatusCodes.BadRequest;
+                return response;
+            }
         }
 
-        public async Task Update(User user)
+        public async Task<BaseResponse<User>> Update(User user)
         {
-            var updatedUser = await _userRepository.FindById(user.Id);
-            if(updatedUser is null)
-                throw new Exception("Böyle bir kullanıcı mevcut değil.");
+            BaseResponse<User> response = new BaseResponse<User>();
+            var deletedUser = await _userRepository.FindById(user.Id);
+            if (deletedUser is not null)
+            {
+                response.ResponseStatusCodes = ResponseStatusCodes.AccountUpdateFail;
+                return response;
+            }
             await _userRepository.Update(user);
+            response.ResponseStatusCodes = ResponseStatusCodes.AccountUpdateSuccess;
+            response.Data = deletedUser;
+            return response;
         }
     }
 

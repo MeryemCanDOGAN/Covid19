@@ -2,15 +2,15 @@ namespace CovidApp
 {
     public interface IUserService
     {
-        Task Create(User user);
-        Task Update(User user);
-        Task Delete(User user);
-        Task<List<User>> GetAll();
-        Task<User> FindById(int id);
-        Task<List<User>> GetAllByIsCorona(bool isCorona);
-        Task<List<User>> GetAllUserByCityFromPlateCode(int plateCode);
-        Task<List<User>> GetAllByCityPlateCodeAndIsCorona(int plateCode, bool isCorona);
-        Task<int> CoronaCount();
-        Task<int> CoronaCountByCity(int plateCode);
+        Task<BaseResponse<User>> Create(User user);
+        Task<BaseResponse<User>> Update(User user);
+        Task<BaseResponse<User>> Delete(User user);
+        Task<BaseResponse<List<User>>> GetAll();
+        Task<BaseResponse<User>> FindById(int id);
+        Task<BaseResponse<List<User>>> GetAllByIsCorona(bool isCorona);
+        Task<BaseResponse<List<User>>> GetAllUserByCityFromPlateCode(int plateCode);
+        Task<BaseResponse<List<User>>> GetAllByCityPlateCodeAndIsCorona(int plateCode, bool isCorona);
+        Task<BaseResponse<int>> CoronaCount();
+        Task<BaseResponse<int>> CoronaCountByCity(int plateCode);
     }
 }

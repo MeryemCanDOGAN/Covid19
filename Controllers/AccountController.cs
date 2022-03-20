@@ -8,76 +8,78 @@ namespace CovidApp
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
+        private ResponseGeneratorHelper ResponseGeneratorHelper;
 
         public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
+            ResponseGeneratorHelper = new ResponseGeneratorHelper();
         }
 
         [HttpPost("create")]
-        public async Task Create(Account account)
+        public async Task<ActionResult<BaseResponse<Account>>> Create(Account account)
         {
-            await _accountService.Create(account);
+            return ResponseGeneratorHelper.ResponseGenerator(await _accountService.Create(account));
         }
 
         [HttpPut("update")]
-        public async Task Update(Account account)
-        {
-            await _accountService.Update(account);
+        public async Task<ActionResult<BaseResponse<Account>>> Update(Account account)
+        {   
+            return ResponseGeneratorHelper.ResponseGenerator(await _accountService.Update(account));
         }
 
         [HttpPost("updatephonenumber")]
-        public async Task UpdatePhoneNumber(string oldPhoneNumber, string newPhoneNumber)
-        {
-            await _accountService.UpdatePhoneNumber(oldPhoneNumber, newPhoneNumber);
+        public async Task<ActionResult<BaseResponse<Account>>> UpdatePhoneNumber(string oldPhoneNumber, string newPhoneNumber)
+        {          
+            return ResponseGeneratorHelper.ResponseGenerator(await _accountService.UpdatePhoneNumber(oldPhoneNumber, newPhoneNumber));
         }
 
         [HttpPost("changeisblocked")]
-        public async Task ChangeIsBlockedById([FromQuery] int id)
+        public async Task<ActionResult<BaseResponse<Account>>> ChangeIsBlockedById([FromQuery] int id)
         {
-            await _accountService.ChangeIsBlockedById(id);
+            return ResponseGeneratorHelper.ResponseGenerator(await _accountService.ChangeIsBlockedById(id));
         }
 
         [HttpPost("changevisibility")]
-        public async Task ChangeVisibilityById([FromQuery] int id)
+        public async Task<ActionResult<BaseResponse<Account>>> ChangeVisibilityById([FromQuery] int id)
         {
-            await _accountService.ChangeVisibilityById(id);
+            return ResponseGeneratorHelper.ResponseGenerator(await _accountService.ChangeVisibilityById(id));
         }
 
         [HttpDelete("delete")]
-        public async Task DeleteById([FromQuery] int id)
+        public async Task<ActionResult<BaseResponse<string>>> DeleteById([FromQuery] int id)
         {
-            await _accountService.Delete(id);
+            return ResponseGeneratorHelper.ResponseGenerator(await _accountService.Delete(id));
         }
 
         [HttpGet("getall")]
-        public async Task<List<Account>> GetAll()
+        public async Task<ActionResult<BaseResponse<List<Account>>>> GetAll()
         {
-            return await _accountService.GetAll();
+            return ResponseGeneratorHelper.ResponseGenerator(await _accountService.GetAll());
         }
 
         [HttpGet("getbyphonenumber")]
-        public async Task<Account> GetByPhoneNumber([FromQuery] string phoneNumber)
+        public async Task<ActionResult<BaseResponse<Account>>>  GetByPhoneNumber([FromQuery] string phoneNumber)
         {
-            return await _accountService.FindByPhoneNumberAsync(phoneNumber);
+            return ResponseGeneratorHelper.ResponseGenerator(await _accountService.FindByPhoneNumberAsync(phoneNumber));
         }
 
         [HttpGet("getbyid")]
-        public async Task<Account> GetById([FromQuery] int id)
+        public async Task<ActionResult<BaseResponse<Account>>>  GetById([FromQuery] int id)
         {
-            return await _accountService.FindById(id);
+            return ResponseGeneratorHelper.ResponseGenerator(await _accountService.FindById(id));
         }
 
         [HttpGet("getallbyblocked")]
-        public async Task<List<Account>> GetAllByBlocked([FromQuery] bool isBlocked)
+        public async Task<ActionResult<BaseResponse<List<Account>>>> GetAllByBlocked([FromQuery] bool isBlocked)
         {
-            return await _accountService.GetAllByBlocked(isBlocked);
+            return ResponseGeneratorHelper.ResponseGenerator(await _accountService.GetAllByBlocked(isBlocked));
         }
 
         [HttpGet("getallbyvisibility")]
-        public async Task<List<Account>> GetAllByVisibility([FromQuery] bool isVisible)
+        public async Task<ActionResult<BaseResponse<List<Account>>>> GetAllByVisibility([FromQuery] bool isVisible)
         {
-            return await _accountService.GetAllByVisibility(isVisible);
+            return ResponseGeneratorHelper.ResponseGenerator(await _accountService.GetAllByVisibility(isVisible));
         }
 
     }

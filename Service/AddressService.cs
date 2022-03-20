@@ -2,69 +2,79 @@ namespace CovidApp
 {
     public class AddressService : IAddressService
     {
-        public Task<Address> CreateAddress(Address address)
+        private readonly IAddressRepository _addressRepository;
+
+        public AddressService(IAddressRepository addressRepository)
         {
-            throw new NotImplementedException();
+            _addressRepository = addressRepository;
         }
 
-        public Task<City> CreateCity(City city)
+        public async Task<Address> CreateAddress(Address address)
         {
-            throw new NotImplementedException();
+            return await _addressRepository.CreateAddress(address);
         }
 
-        public Task<District> CreateDistrict(District district)
+        public async Task<City> CreateCity(City city)
         {
-            throw new NotImplementedException();
+            var ExistCity = await _addressRepository.FindCityByName(city.Name);
+            if (ExistCity == null)
+            {
+                return await _addressRepository.CreateCity(city);
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
 
-        public Task<Address> DeleteAddress(int id)
+        public async Task<District> CreateDistrict(District district)
         {
-            throw new NotImplementedException();
+            var ExistDistrict = await _addressRepository.FindDistrictByName(district.Name);
+            if (ExistDistrict == null)
+            {
+                return await _addressRepository.CreateDistrict(district);
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
 
-        public Task<City> DeleteCity(City city)
+        public async Task<Address> DeleteAddress(int id)
         {
-            throw new NotImplementedException();
+            return await _addressRepository.DeleteAddress(id);
         }
 
-        public Task<District> DeleteDistrict(District district)
+
+        public async Task<Address> GetAddressById(int id)
         {
-            throw new NotImplementedException();
+            return await _addressRepository.GetAddressById(id);
         }
 
-        public Task<City> FindCityByName(string CityName)
+        public async Task<List<Address>> GetAllAddress()
         {
-            throw new NotImplementedException();
+            return await _addressRepository.GetAllAddress();
+        }
+        public async Task<List<City>> GetAllCity()
+        {
+            return await _addressRepository.GetAllCity();
         }
 
-        public Task<District> FindDistrictByName(string DistirctName)
+        public async Task<List<District>> GetAllDistricts()
         {
-            throw new NotImplementedException();
+            return await _addressRepository.GetAllDistricts();
+
+
         }
 
-        public Task<Address> GetAddressById(int id)
+        public async Task<Address> UpdateAddress(Address address)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Address>> GetAllAddress()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<City>> GetAllCity()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<District>> GetAllDistrictsByCityId(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Address> UpdateAddress(Address address)
-        {
-            throw new NotImplementedException();
+            var updateaddress = await _addressRepository.UpdateAddress(address);
+            if (updateaddress != null)
+            {
+                return updateaddress;
+            }
+            return null;
         }
     }
 

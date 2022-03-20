@@ -175,7 +175,7 @@ namespace CovidApp
                                new Account
                                {
                                    Id = 1,
-                                   PhoneNumber = "01111111111",
+                                   PhoneNumber = "1111111111",
                                    IsVisibility = false,
                                    Blocked = false
 
@@ -183,21 +183,21 @@ namespace CovidApp
                                new Account
                                {
                                    Id = 2,
-                                   PhoneNumber = "02222222222",
+                                   PhoneNumber = "2222222222",
                                    IsVisibility = false,
                                    Blocked = false
                                },
                                new Account
                                {
                                    Id = 3,
-                                   PhoneNumber = "03333333333",
+                                   PhoneNumber = "3333333333",
                                    IsVisibility = false,
                                    Blocked = false
                                },
                                new Account
                                {
                                    Id = 4,
-                                   PhoneNumber = "04444444444",
+                                   PhoneNumber = "4444444444",
                                    IsVisibility = false,
                                    Blocked = false
 
@@ -205,21 +205,21 @@ namespace CovidApp
                                new Account
                                {
                                    Id = 5,
-                                   PhoneNumber = "05555555555",
+                                   PhoneNumber = "5555555555",
                                    IsVisibility = false,
                                    Blocked = false
                                },
                                new Account
                                {
                                    Id = 6,
-                                   PhoneNumber = "06666666666",
+                                   PhoneNumber = "6666666666",
                                    IsVisibility = false,
                                    Blocked = false
                                },
                                new Account
                                {
                                    Id = 7,
-                                   PhoneNumber = "07777777777",
+                                   PhoneNumber = "7777777777",
                                    IsVisibility = false,
                                    Blocked = false
 
@@ -227,14 +227,14 @@ namespace CovidApp
                                new Account
                                {
                                    Id = 8,
-                                   PhoneNumber = "08888888888",
+                                   PhoneNumber = "8888888888",
                                    IsVisibility = false,
                                    Blocked = false
                                },
                                new Account
                                {
                                    Id = 9,
-                                   PhoneNumber = "09999999999",
+                                   PhoneNumber = "9999999999",
                                    IsVisibility = false,
                                    Blocked = false
                                }

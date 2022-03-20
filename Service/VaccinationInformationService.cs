@@ -9,39 +9,81 @@ namespace CovidApp
             this._vaccinationInformationRepository = vaccinationInformationRepository;
         }
 
-        public Task<VaccinationInformation> Create(VaccinationInformation vaccination)
+        public async Task<VaccinationInformation> Create(VaccinationInformation vaccination)
         {
-            throw new NotImplementedException();
+            var vacc = await _vaccinationInformationRepository.GetVaccinationInformationById(vaccination.Id);
+
+            if (vacc == null)
+                return await _vaccinationInformationRepository .Create(vaccination);
+
+            throw new Exception("Girilen aşı zaten mevcut");
         }
 
-        public Task Delete(VaccinationInformation vaccination)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var vaccination = await _vaccinationInformationRepository.GetVaccinationInformationById(id);
+
+            if (vaccination != null)
+                await _vaccinationInformationRepository.Delete(vaccination);
+
+            throw new Exception("Girilen Id aşı bulunamadı");
         }
 
-        public Task<List<VaccinationInformation>> GetAllVaccinationInformation()
+        public async Task<List<VaccinationInformation>> GetAllVaccinationInformation()
         {
-            throw new NotImplementedException();
+            var vaccinationList = await _vaccinationInformationRepository.GetAllVaccinationInformation();
+
+            if (vaccinationList != null)
+                return vaccinationList;
+
+            throw new Exception("Aşı bilgisi bulunamadı");
         }
 
-        public Task<List<User>> GetUsersByVaccinationInformationName(VaccinationName vaccinationName)
+        public async Task<List<User>> GetUsersByVaccinationInformationName(VaccinationName vaccinationName)
         {
-            throw new NotImplementedException();
+            var users = await _vaccinationInformationRepository.GetUsersByVaccinationInformationName(vaccinationName);
+
+            if (users != null)
+                return users;
+
+            throw new Exception("Girilen aşıdan hiç kişi bulunamadı");
         }
 
-        public Task<List<VaccinationInformation>> GetUserVaccinationInformationByUserId(int id)
+        public async Task<List<VaccinationInformation>> GetUserVaccinationInformationsByUserId(int id)
         {
-            throw new NotImplementedException();
+            var usersVaccInfo = await _vaccinationInformationRepository.GetUserVaccinationInformationsByUserId(id);
+
+            if (usersVaccInfo != null)
+                return usersVaccInfo;
+
+            throw new Exception("Girilen kişi ile ilgili aşı bulunamadı");
         }
 
-        public Task<VaccinationInformation> GetVaccinationInformationById(int id)
+        public async Task<VaccinationInformation> GetVaccinationInformationById(int id)
         {
-            throw new NotImplementedException();
+            var vaccination = await _vaccinationInformationRepository.GetVaccinationInformationById(id);
+
+            if (vaccination != null)
+                return vaccination;
+
+            throw new Exception("Girilen id ile aşı bilgisi bulunamadı");
         }
 
-        public Task<VaccinationInformation> Update(VaccinationInformation vaccination)
+        public async Task<VaccinationInformation> Update(int id, VaccinationInformation vaccination)
         {
-            throw new NotImplementedException();
+            var updatedVaccination = await _vaccinationInformationRepository.GetVaccinationInformationById(id);
+
+            if (updatedVaccination != null)
+            {
+                updatedVaccination.VacinationName = vaccination.VacinationName;
+                updatedVaccination.VaccinationDate = vaccination.VaccinationDate;
+                updatedVaccination.UserId = vaccination.UserId;
+                updatedVaccination.User = vaccination.User;
+
+                await _vaccinationInformationRepository.Update(updatedVaccination);
+            }
+
+            throw new Exception("Güncellencek aşı id'si geçersiz");
         }
     }
 

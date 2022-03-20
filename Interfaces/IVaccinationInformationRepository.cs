@@ -8,6 +8,6 @@ namespace CovidApp
         Task<VaccinationInformation> GetVaccinationInformationById(int id);
         Task<VaccinationInformation> Update(VaccinationInformation vaccination);
         Task<List<User>> GetUsersByVaccinationInformationName(VaccinationName vaccinationName);
-        Task<List<VaccinationInformation>> GetUserVaccinationInformationByUserId(int id);
+        Task<List<VaccinationInformation>> GetUserVaccinationInformationsByUserId(int id);
     }
 }

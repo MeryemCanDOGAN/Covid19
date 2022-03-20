@@ -39,7 +39,7 @@ namespace CovidApp
             return users;
         }
 
-        public async Task<List<VaccinationInformation>> GetUserVaccinationInformationByUserId(int id)
+        public async Task<List<VaccinationInformation>> GetUserVaccinationInformationsByUserId(int id)
         {
             return await (from x in _context.VaccinationInformations
                           where x.UserId == id

@@ -24,10 +24,8 @@ namespace CovidApp
             builder.Services.AddScoped<IVaccinationInformationRepository,VaccinationInformationRepository>();
             builder.Services.AddScoped<IVaccinationInformationService,VaccinationInformationService>();
             builder.Services.AddScoped<IPassportRepository, PassportRepository>();
-            
             builder.Services.AddScoped<IViolationTypeRepository,ViolationTypeRepository>();
-
-
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -26,7 +26,7 @@ namespace CovidApp
             builder.Services.AddScoped<IVaccinationInformationRepository,VaccinationInformationRepository>();
             builder.Services.AddScoped<IVaccinationInformationService,VaccinationInformationService>();
             builder.Services.AddScoped<IPassportRepository, PassportRepository>();
-            
+            builder.Services.AddScoped<IRiskMapService, RiskMapService>();
             builder.Services.AddScoped<IViolationTypeRepository,ViolationTypeRepository>();
 
 
